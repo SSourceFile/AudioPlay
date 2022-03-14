@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             var downPath = Environment.getDownloadCacheDirectory().absolutePath
 
             Log.e("++++", "安排"+path+" // "+downPath)
-            Log.e("+++++", cacheDir.path)
             var file = File(path+"/"+"_test.pcm");
             if(file.exists()){
                 Log.e("++++", "文件存在")
