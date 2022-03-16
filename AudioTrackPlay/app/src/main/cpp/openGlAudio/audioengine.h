@@ -10,7 +10,7 @@
 #include <android/log.h>
 #include <stdio.h>
 #include <assert.h>
-#include "logUtils.h"
+#include "../logUtils.h"
 
 
 

@@ -25,7 +25,8 @@ add_library( # Sets the name of the library.
         native-lib.cpp
         openGlAudio/audioengine.h
         openGlAudio/OpenslAudioPlay.cpp
-        openGlAudio/logUtils.h
+        logUtils.h
+        openSLRecord/SLAudioRecord.cpp
         )
 
 # Searches for a specified prebuilt library and stores the path as a

@@ -7,7 +7,7 @@
 #include <android/log.h>
 #include <jni.h>
 #include <string.h>
-#include "logUtils.h"
+#include "../logUtils.h"
 
 
 //#define LOGE()

@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AudioRecord采集"
+            android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AudioOpenSL采集"
+            android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/audio_record"
@@ -31,7 +33,8 @@
             android:id="@+id/play_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="播放音频"
+            android:text="AudioTrack播放音频"
+            android:textAllCaps="false"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/audio_opensl"
@@ -42,7 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="停止播放"
+            android:text="AudioTrack停止播放"
+            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/play_audio" />
@@ -58,6 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="opensl播放"
+            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/stop_audio" />
@@ -68,9 +73,30 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="opensl停止"
+            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/native_play" />
 
+        <Button
+            android:id="@+id/record_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AudioRecord开始录音"
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/native_stop" />
+        <Button
+            android:id="@+id/record_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AudioRecord停止录音"
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/record_start" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

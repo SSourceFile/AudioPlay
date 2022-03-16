@@ -9,7 +9,10 @@ import android.view.View
 import androidx.annotation.NonNull
 import com.hmh.audiotrackplay.audioTrack.AudioTracker
 import com.hmh.audiotrackplay.databinding.ActivityMainBinding
+import com.hmh.audiotrackplay.record.AudioRecorder
+import com.tbruyelle.rxpermissions3.RxPermissions
 import java.io.File
+import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,10 +21,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         rootView = ActivityMainBinding.inflate(layoutInflater)
         setContentView(rootView.root)
+        var permission = RxPermissions(this)
+        var path = Environment.getExternalStorageDirectory().absolutePath
+        permission.request(
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.RECORD_AUDIO
+        ).subscribe { open ->
+            run {
+                if(open){
+                    Log.e("++++", "权限一打开")
+                }else{
+                    Log.e("++++++", "权限未打开")
+                }
+            }
 
-        var at = AudioTracker(this);
+        }
+        var at = AudioTracker();
         rootView.playAudio.setOnClickListener {
-            at.createAudioTrack("暂时用了raw的方式播放")
+            at.createAudioTrack(cacheDir.path + "/" + "my_test.pcm")
             at.start()
         }
         rootView.stopAudio.setOnClickListener {
@@ -31,17 +49,18 @@ class MainActivity : AppCompatActivity() {
 
         rootView.nativePlay.setOnClickListener {
 
-            var path = Environment.getExternalStorageDirectory().absolutePath
-            var downPath = Environment.getDownloadCacheDirectory().absolutePath
 
-            Log.e("++++", "安排"+path+" // "+downPath)
-            var file = File(path+"/"+"_test.pcm");
-            if(file.exists()){
+            var downPath = Environment.getDownloadCacheDirectory().absolutePath
+//            Environment.getExternalStorageDirectory().getAbsolutePath();
+            Log.e("++++", "安排" + path + " // " + downPath)
+            var file = File(path + "/" + "_test.pcm");
+            if (file.exists()) {
                 Log.e("++++", "文件存在")
-            }else{
+            } else {
                 Log.e("+++++", "文件不存在")
             }
-            nativeStartMusic(cacheDir.path+"/"+"_test.pcm");
+//            nativeStartMusic(cacheDir.path+"/"+"myhmh.pcm");
+            nativeStartMusic(cacheDir.path + "/" + "my_test.pcm");
         }
 
         rootView.nativeStop.setOnClickListener {
@@ -50,20 +69,37 @@ class MainActivity : AppCompatActivity() {
 
         //audioRecord采集音频
         rootView.audioRecord.setOnClickListener {
-
+            nativeRecordStart(cacheDir.path + "/" + "my_test.pcm")
         }
 
         //audioOpenSL
         rootView.audioOpensl.setOnClickListener {
+            nativeRecordStop()
+        }
 
+        var record = AudioRecorder.getInstance();
+        rootView.recordStart.setOnClickListener {
+            if (record.status == AudioRecorder.Status.STATUS_NO_READY) {
+                record.createDefaultAudio("my_test", this)
+                record.startRecord(null, cacheDir.path+"/"+"my_test.pcm")
+            }
+        }
+
+        rootView.recordStop.setOnClickListener {
+            record.stopRecord()
         }
 
     }
+
     external fun stringFromJNI(): String
 
     external fun nativeStartMusic(pcmPath: String)
     external fun nativeStopMusic()
-    companion object{
+    external fun nativeRecordStart(savePath: String): Boolean
+    external fun nativeRecordStop()
+
+
+    companion object {
         init {
             System.loadLibrary("audiotrackplay")
         }
