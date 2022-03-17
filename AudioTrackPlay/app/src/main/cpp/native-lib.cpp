@@ -6,7 +6,7 @@
 #include "openGlAudio/OpenslAudioPlay.h"
 #include <pthread.h>
 #include "logUtils.h"
-#include "openSLRecord/SLAudioRecord.h"
+#include "openSLRecord/OpenRecordPlay.h"
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_hmh_audiotrackplay_MainActivity_stringFromJNI(
@@ -87,25 +87,25 @@ Java_com_hmh_audiotrackplay_MainActivity_nativeStopMusic(JNIEnv *env, jobject th
         pcmFile = nullptr;
     }
 }
-AudioRecorder *audioRecorder = nullptr;
+OpenRecordPlay *audioRecorder = nullptr;
 extern "C"
 JNIEXPORT jboolean JNICALL
 Java_com_hmh_audiotrackplay_MainActivity_nativeRecordStart(JNIEnv *env, jobject thiz,
                                                            jstring save_path) {
     const char *recordFileSavePath = env->GetStringUTFChars(save_path, nullptr);
     if (!audioRecorder) {
-        audioRecorder = new AudioRecorder();
+        audioRecorder = new OpenRecordPlay(recordFileSavePath);
     }
-
-    audioRecorder->startRecord(recordFileSavePath);
+//
     env->ReleaseStringUTFChars(save_path, recordFileSavePath);
+    audioRecorder->start();
     return true;
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_hmh_audiotrackplay_MainActivity_nativeRecordStop(JNIEnv *env, jobject thiz) {
     if (audioRecorder) {
-        audioRecorder->stopRecord();
+        audioRecorder->stop();
         delete audioRecorder;
         audioRecorder = nullptr;
     }
