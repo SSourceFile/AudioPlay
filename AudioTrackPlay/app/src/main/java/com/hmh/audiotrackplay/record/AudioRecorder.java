@@ -72,13 +72,6 @@ public class AudioRecorder {
                 channelConfig, channelConfig);
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         audioRecord = new AudioRecord(audioSource, sampleRateInHz, channelConfig, audioFormat, bufferSizeInBytes);
@@ -87,20 +80,13 @@ public class AudioRecorder {
 
     /**
      * 创建默认的录音对象
-     *
      */
     public void createDefaultAudio(String fileName, Context context) {
         // 获得缓冲区字节大小
         bufferSizeInBytes = AudioRecord.getMinBufferSize(AUDIO_SAMPLE_RATE,
                 AUDIO_CHANNEL, AUDIO_ENCODING);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         audioRecord = new AudioRecord(AUDIO_INPUT, AUDIO_SAMPLE_RATE, AUDIO_CHANNEL, AUDIO_ENCODING, bufferSizeInBytes);
@@ -110,10 +96,9 @@ public class AudioRecorder {
 
 
     private String path;
+
     /**
      * 开始录音
-     *
-     * @param listener 音频流的监听
      */
     public void startRecord(final RecordStreamListener listener, String path) {
         this.path = path;
@@ -123,7 +108,6 @@ public class AudioRecorder {
         if (status == Status.STATUS_START) {
             throw new IllegalStateException("正在录音");
         }
-        Log.d("AudioRecorder", "===startRecord===" + audioRecord.getState());
         audioRecord.startRecording();
 
         new Thread(new Runnable() {
@@ -138,7 +122,6 @@ public class AudioRecorder {
      * 暂停录音
      */
     public void pauseRecord() {
-        Log.d("AudioRecorder", "===pauseRecord===");
         if (status != Status.STATUS_START) {
             throw new IllegalStateException("没有在录音");
         } else {
@@ -151,7 +134,6 @@ public class AudioRecorder {
      * 停止录音
      */
     public void stopRecord() {
-        Log.d("AudioRecorder", "===stopRecord===");
         if (status == Status.STATUS_NO_READY || status == Status.STATUS_READY) {
             throw new IllegalStateException("录音尚未开始");
         } else {
@@ -165,7 +147,6 @@ public class AudioRecorder {
      * 释放资源
      */
     public void release() {
-        Log.d("AudioRecorder", "===release===");
         //假如有暂停录音
         try {
             if (filesName.size() > 0) {
@@ -182,7 +163,6 @@ public class AudioRecorder {
                 //这里由于只要录音过filesName.size都会大于0,没录音时fileName为null
                 //会报空指针 NullPointerException
                 // 将单个pcm文件转化为wav文件
-                //Log.d("AudioRecorder", "=====makePCMFileToWAVFile======");
                 //makePCMFileToWAVFile();
             }
         } catch (IllegalStateException e) {
@@ -214,7 +194,6 @@ public class AudioRecorder {
 
     /**
      * 将音频信息写入文件
-     *
      * @param listener 音频流的监听
      */
     private void writeDataTOFile(RecordStreamListener listener) {
@@ -264,14 +243,12 @@ public class AudioRecorder {
                 fos.close();// 关闭写入流
             }
         } catch (IOException e) {
-            Log.e("AudioRecorder", e.getMessage());
+            Log.e("+++++", e.getMessage());
         }
     }
 
     /**
-     * 将pcm合并成wav
-     *
-     * @param filePaths
+     * 将pcm合并成wav， 暂时没用到，只用到了pcm给到实时播放
      */
     private void mergePCMFilesToWAVFile(final List<String> filePaths) {
         new Thread(new Runnable() {
@@ -281,7 +258,6 @@ public class AudioRecorder {
 //                    //操作成功
 //                } else {
 //                    //操作失败
-//                    Log.e("AudioRecorder", "mergePCMFilesToWAVFile fail");
 //                    throw new IllegalStateException("mergePCMFilesToWAVFile fail");
 //                }
                 fileName = null;
@@ -300,7 +276,6 @@ public class AudioRecorder {
 //                    //操作成功
 //                } else {
 //                    //操作失败
-//                    Log.e("AudioRecorder", "makePCMFileToWAVFile fail");
 //                    throw new IllegalStateException("makePCMFileToWAVFile fail");
 //                }
                 fileName = null;
@@ -310,8 +285,6 @@ public class AudioRecorder {
 
     /**
      * 获取录音对象的状态
-     *
-     * @return
      */
     public Status getStatus() {
         return status;
@@ -319,8 +292,6 @@ public class AudioRecorder {
 
     /**
      * 获取本次录音文件的个数
-     *
-     * @return
      */
     public int getPcmFilesCount() {
         return filesName.size();

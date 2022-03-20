@@ -72,8 +72,6 @@ public class FileUtil {
 
     /**
      * 判断是否有外部存储设备sdcard
-     *
-     * @return true | false
      */
     public static boolean isSdcardExit() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
@@ -84,8 +82,6 @@ public class FileUtil {
 
     /**
      * 获取全部pcm文件列表
-     *
-     * @return
      */
     public static List<File> getPcmFiles() {
         List<File> list = new ArrayList<>();
@@ -107,8 +103,6 @@ public class FileUtil {
 
     /**
      * 获取全部wav文件列表
-     *
-     *
      */
     public static List<File> getWavFiles() {
         List<File> list = new ArrayList<>();

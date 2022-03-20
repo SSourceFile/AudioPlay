@@ -4,6 +4,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        jcenter()
     }
 }
 dependencyResolutionManagement {
@@ -12,7 +13,9 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
+        jcenter()
     }
 }
 rootProject.name = "AudioTrackPlay"
 include ':app'
+include ':small'
