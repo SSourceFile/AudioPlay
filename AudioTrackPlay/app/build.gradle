@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'AndResGuard'
+//    id 'AndResGuard'
 
 }
+apply from: 'and_res_guard.gradle'
 def conf = rootProject.ext
 def keystoreProperties = new Properties()
 // Load your keystore.properties file into the keystoreProperties object.
