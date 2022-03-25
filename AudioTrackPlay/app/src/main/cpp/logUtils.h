@@ -4,7 +4,7 @@
 
 #ifndef AUDIOTRACKPLAY_LOGUTILS_H
 #define AUDIOTRACKPLAY_LOGUTILS_H
-#include "../../../../../../../compute/AndroidTools/SDK/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/android/log.h"
+#include <android/log.h>
 #define TAG "++++++++" // 这个是自定义的LOG的标识
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG ,__VA_ARGS__) // 定义LOGI类型

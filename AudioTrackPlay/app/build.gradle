@@ -1,20 +1,17 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-//    id 'AndResGuard'
-
 }
 apply from: 'and_res_guard.gradle'
 def conf = rootProject.ext
 def keystoreProperties = new Properties()
-// Load your keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(new File("${project.getProjectDir()}/keystore.properties")))
 
 android {
     compileSdk conf.android.complieSdkVersion
 
     defaultConfig {
-        applicationId "com.hmh.audiotrackplay"
+        applicationId conf.android.applicationId
         minSdk conf.android.minSdkVersion
         targetSdk conf.android.targetSdkVersion
         versionCode conf.android.versionCode
@@ -49,41 +46,44 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    //指定CMakeLists
     externalNativeBuild {
         cmake {
             path file('src/main/cpp/CMakeLists.txt')
             version conf.android.cmakeVersion
         }
     }
+    //指定ndk路径
+    ndkVersion = "22.1.7171670"
     lintOptions {
         abortOnError false
     }
     signingConfigs {
-
-            release {
-                keyAlias keystoreProperties['releaseKeyAlias']
-                keyPassword keystoreProperties['releaseKeyPassword']
-                storeFile file(keystoreProperties['releaseStoreFile'])
-                storePassword keystoreProperties['releaseStorePassword']
-            }
-            debug {
-                keyAlias keystoreProperties['debugKeyAlias']
-                keyPassword keystoreProperties['debugKeyPassword']
-                storeFile file(keystoreProperties['debugStoreFile'])
-                storePassword keystoreProperties['debugStorePassword']
-            }
+        release {
+            keyAlias keystoreProperties['releaseKeyAlias']
+            keyPassword keystoreProperties['releaseKeyPassword']
+            storeFile file(keystoreProperties['releaseStoreFile'])
+            storePassword keystoreProperties['releaseStorePassword']
+        }
+        debug {
+            keyAlias keystoreProperties['debugKeyAlias']
+            keyPassword keystoreProperties['debugKeyPassword']
+            storeFile file(keystoreProperties['debugStoreFile'])
+            storePassword keystoreProperties['debugStorePassword']
+        }
 
     }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
-            if(conf.isOpenModule){
+            if (conf.isOpenModule) {
                 manifest.srcFile 'src/main/debug/AndroidManifest.xml'
-            }else{
+            } else {
                 manifest.srcFile 'src/main/release/AndroidManifest.xml'
             }
         }
     }
+    //开启viewbinding
     buildFeatures {
         viewBinding = true
     }
@@ -101,5 +101,6 @@ dependencies {
     androidTestImplementation conf.dependencies.espresso
     implementation conf.dependencies.rxPermission
     implementation conf.dependencies.rxjava
+    implementation conf.dependencies.epic
 
 }

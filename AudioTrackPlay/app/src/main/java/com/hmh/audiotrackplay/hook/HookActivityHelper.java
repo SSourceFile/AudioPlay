@@ -5,7 +5,11 @@ import android.app.Instrumentation;
 
 //import com.bytedance.android.bytehook.ByteHook;
 
+import com.taobao.android.dexposed.DexposedBridge;
+import com.taobao.android.dexposed.XposedHelpers;
+
 import java.lang.reflect.Field;
+
 
 /**
  *hookhelp类
@@ -23,9 +27,11 @@ public class HookActivityHelper {
 //
 //            ProxyInstrumentation proxyInstrumentation = new ProxyInstrumentation(instrumentation);
 //            mInstumentation.set(activity, proxyInstrumentation);
-            Instrumentation instrumentation = (Instrumentation) RefInvoke.getFieldObject(Activity.class,activity,"mInstrumentation");
-            ProxyInstrumentation instrumentation1 = new ProxyInstrumentation(instrumentation);
-            RefInvoke.setFieldObject(Activity.class,activity,"mInstrumentation",instrumentation1);
+//            Instrumentation instrumentation = (Instrumentation) RefInvoke.getFieldObject(Activity.class,activity,"mInstrumentation");
+//            ProxyInstrumentation instrumentation1 = new ProxyInstrumentation(instrumentation);
+//            RefInvoke.setFieldObject(Activity.class,activity,"mInstrumentation",instrumentation1);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
