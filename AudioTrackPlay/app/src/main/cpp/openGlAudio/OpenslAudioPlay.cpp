@@ -72,7 +72,7 @@ bool OpenslAudioPlay::init() {
                                                        &audioSink, mSampleRate ? 2 : 3, ids, req);
 
     if (result != SL_RESULT_SUCCESS) {
-        LOGE("创建播放器失败", result);
+//        LOGE("创建播放器失败", result);
         return false;
     }
     //初始化播放器

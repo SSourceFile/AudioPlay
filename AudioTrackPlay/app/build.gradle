@@ -23,6 +23,10 @@ android {
                 cppFlags conf.android.cppFlags
             }
         }
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+
     }
 
     buildTypes {
@@ -90,6 +94,9 @@ android {
 
 }
 
+tasks.withType(JavaCompile){
+    options.encoding("UTF-8")
+}
 dependencies {
 
     implementation conf.dependencies.core_ktx

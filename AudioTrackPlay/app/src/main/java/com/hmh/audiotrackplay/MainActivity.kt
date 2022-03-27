@@ -1,11 +1,13 @@
 package com.hmh.audiotrackplay
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.hmh.audiotrackplay.audioTrack.AudioTracker
 import com.hmh.audiotrackplay.databinding.ActivityMainBinding
+import com.hmh.audiotrackplay.ffmpegPlayer.PlayerActivity
 import com.hmh.audiotrackplay.hook.AcitvityHook
 import com.hmh.audiotrackplay.hook.HookActivityHelper
 import com.hmh.audiotrackplay.record.AudioRecorder
@@ -90,6 +92,9 @@ class MainActivity : AppCompatActivity() {
             //audioRecord停止录音
             record.stopRecord()
         }
+        rootView.entryFfmpegInfo.setOnClickListener {
+            startActivity(Intent(this, PlayerActivity::class.java))
+        }
         rootView.startActivity.setOnClickListener {
 
 //            Field mInstumentation = Activity.class.getDeclaredField("mInstrumentation");
@@ -117,6 +122,7 @@ class MainActivity : AppCompatActivity() {
     private external fun nativeStopMusic()
     private external fun nativeRecordStart(savePath: String): Boolean
     private external fun nativeRecordStop()
+//    private external fun getFFmpegInfo(): String
 
     companion object {
         init {
